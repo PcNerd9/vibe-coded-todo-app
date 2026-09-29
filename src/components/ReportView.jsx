@@ -162,44 +162,45 @@ export default function ReportView({ days }) {
         <BarChart data={counts} labelFor={chartLabel} />
       </div>
 
-      {/* Open tasks */}
-      <div className="card list-card">
-        <h3 className="card-title">
-          Not completed <span className="count-pill">{openTasks.length}</span>
-        </h3>
-        {openTasks.length === 0 ? (
-          <p className="empty-inline">Nothing open in this range. 🎉</p>
-        ) : (
-          <ul className="report-task-list">
-            {openTasks.map((t) => (
-              <li key={t.id} className="report-task">
-                <span className="report-task-date">{formatShort(t.dateKey)}</span>
-                <span className="report-task-text">{t.text}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Reviews */}
-      {reviews.length > 0 && (
+      {/* Open tasks + reviews — share a row on wide screens */}
+      <div className="report-grid">
         <div className="card list-card">
           <h3 className="card-title">
-            Day reviews <span className="count-pill">{reviews.length}</span>
+            Not completed <span className="count-pill">{openTasks.length}</span>
           </h3>
-          <ul className="review-list">
-            {reviews.map((r) => (
-              <li key={r.dateKey} className="review-item">
-                <div className="review-head">
-                  <span className="review-date">{formatLong(r.dateKey)}</span>
-                  <Stars value={r.rating} size={14} />
-                </div>
-                {r.note && <p className="review-note-text">“{r.note}”</p>}
-              </li>
-            ))}
-          </ul>
+          {openTasks.length === 0 ? (
+            <p className="empty-inline">Nothing open in this range. 🎉</p>
+          ) : (
+            <ul className="report-task-list">
+              {openTasks.map((t) => (
+                <li key={t.id} className="report-task">
+                  <span className="report-task-date">{formatShort(t.dateKey)}</span>
+                  <span className="report-task-text">{t.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      )}
+
+        {reviews.length > 0 && (
+          <div className="card list-card">
+            <h3 className="card-title">
+              Day reviews <span className="count-pill">{reviews.length}</span>
+            </h3>
+            <ul className="review-list">
+              {reviews.map((r) => (
+                <li key={r.dateKey} className="review-item">
+                  <div className="review-head">
+                    <span className="review-date">{formatLong(r.dateKey)}</span>
+                    <Stars value={r.rating} size={14} />
+                  </div>
+                  {r.note && <p className="review-note-text">“{r.note}”</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </section>
   )
 }
